@@ -279,26 +279,6 @@ export default class Matrix4 {
     let top = Vec3.cross(direction, right);
     top = Vec3.normalize(top);
 
-    // viewMatrix.mat4[0] = right[0];
-    // viewMatrix.mat4[1] = right[1];
-    // viewMatrix.mat4[2] = right[2];
-    // viewMatrix.mat4[3] = -Vec3.dot(right, eye);
-
-    // viewMatrix.mat4[4] = top[0];
-    // viewMatrix.mat4[5] = top[1];
-    // viewMatrix.mat4[6] = top[2];
-    // viewMatrix.mat4[7] = -Vec3.dot(top, eye);
-
-    // viewMatrix.mat4[8] = direction[0];
-    // viewMatrix.mat4[9] = direction[1];
-    // viewMatrix.mat4[10] = direction[2];
-    // viewMatrix.mat4[11] = -Vec3.dot(direction, eye);
-
-    // viewMatrix.mat4[12] = 0;
-    // viewMatrix.mat4[13] = 0;
-    // viewMatrix.mat4[14] = 0;
-    // viewMatrix.mat4[15] = 1;
-
     viewMatrix.mat4[0] = right[0];
     viewMatrix.mat4[1] = top[0];
     viewMatrix.mat4[2] = direction[0];
