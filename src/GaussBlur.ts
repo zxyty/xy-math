@@ -1,14 +1,14 @@
 
 /**
- * 获取高斯模糊核
+ * 获取一维高斯模糊核
  * @param radius 取样区域半径, 正数, 可选, 默认为 3 应为 大于等于3的奇数
- * @param sigma 标准方差, 可选, 默认取值为 1 
+ * @param sigma 标准方差, 可选, 默认取值为 1 / 3
  * @returns 得到 radius * radios 大小的高斯核
  */
-export const getGaussBlurKernel = (radius: number = 3, sigma: number = 1) => {
+export const getGaussBlurKernel = (radius: number = 3, sigma: number = 0.33) => {
 
     // 符合对称分布的x起始坐标
-    const startX = -Math.floor((radius ** 2) / 2);
+    const startX = -radius;
 
     let guassMatrix: number[] = [];
     let gaussSum = 0;
@@ -25,7 +25,7 @@ export const getGaussBlurKernel = (radius: number = 3, sigma: number = 1) => {
 
     // 因为高斯分布是对称，所以求解一半就行了
     // 求到0处即可
-    for (let i = startX; startX < 0; i += 1) {
+    for (let i = startX; i < 0; i += 1) {
         const y = fx(i);
         guassMatrix.push(y);
         gaussSum += y;

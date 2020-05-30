@@ -20,6 +20,9 @@ export const linearFilter = (mat: number[], kernel: number[]) => {
  * @param kernelSize 核大小
  * @param row 取源数据的开始row位置
  * @param col 取源数据的开始col位置
+ * @param step 每一像素的步长，默认为灰度图为1，如果是rgba 则为4
+ * @param offset 取步长中偏移量的值
+ * @param axis 轴方向 默认xy xy|x|y
  */
 export const getLinearMatData = (
     src: number[],
@@ -27,12 +30,34 @@ export const getLinearMatData = (
     kernelSize: number,
     row: number,
     col: number,
+    step: number = 1,
+    offset: number = 0,
+    axis: "x" | "y" | "xy" = "xy"
 ) => {
-    const out = new Array(kernelSize ** 2).fill(0);
-    for (let i = 0; i < kernelSize; i += 1) {
-        for (let j = 0; j < kernelSize; j += 1) {
-            out[i * kernelSize + j] = src[srcWidth * (row + i) + j + col];
+    if (axis === "xy") {
+        const out = new Array(kernelSize ** 2).fill(0);
+        for (let i = 0; i < kernelSize; i += 1) {
+            for (let j = 0; j < kernelSize; j += 1) {
+                out[i * kernelSize + j] = src[(srcWidth * (row + i) + j + col) * step + offset];
+            }
         }
+        
+        return out;
     }
-    return out;
+    
+    if (axis === "y") {
+        const out = new Array(kernelSize).fill(0);
+        for (let i = 0; i < kernelSize; i += 1) {
+            out[i] = src[(srcWidth * (row + i) + col) * step + offset];
+        }
+        return out;
+    }
+
+    if (axis === "x") {
+        const out = new Array(kernelSize).fill(0);
+        for (let i = 0; i < kernelSize; i += 1) {
+            out[i] = src[(srcWidth * row + i + col) * step + offset];
+        }
+        return out;
+    }
 };
